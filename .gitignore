@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.next/
+build/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+coverage/
+*.tar
+*.tar.gz
+deployment.tar
+deployment.tar.gz
+InstaBot_*.tar.gz
+debug_archive.tar.gz
