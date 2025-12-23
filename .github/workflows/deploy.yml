@@ -1,0 +1,76 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Create .env.production
+      run: |
+        echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env.production
+        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env.production
+        echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env.production
+        echo "DATABASE_URL=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}" >> .env.production
+        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env.production
+        echo "JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}" >> .env.production
+        echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> .env.production
+        echo "JWT_EXPIRATION_TIME=15m" >> .env.production
+        echo "NEXT_PUBLIC_APP_URL=https://mumayazone.com" >> .env.production
+        echo "FRONTEND_URL=https://mumayazone.com" >> .env.production
+        echo "NEXT_PUBLIC_API_URL=https://mumayazone.com/api" >> .env.production
+        echo "REDIS_HOST=redis" >> .env.production
+        echo "REDIS_PORT=6379" >> .env.production
+        echo "REDIS_URL=redis://redis:6379" >> .env.production
+        echo "NODE_ENV=production" >> .env.production
+        echo "PORT=3000" >> .env.production
+        # Google OAuth
+        echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env.production
+        echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.production
+        echo "GOOGLE_CALLBACK_URL=https://mumayazone.com/api/auth/google/callback" >> .env.production
+
+    - name: Archive and Deploy
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VPS_IP }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "."
+        target: "/root/deploy-cache"
+        strip_components: 0
+
+    - name: Execute Remote Deployment
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_IP }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          set -e
+          REMOTE_DIR="/var/www/mqudah-docker"
+          
+          # Move files from cache to final location
+          rm -rf $REMOTE_DIR
+          mkdir -p $REMOTE_DIR
+          cp -r /root/deploy-cache/* $REMOTE_DIR/
+          
+          # Setup Scripts
+          cd $REMOTE_DIR
+          chmod +x cleanup_vps.sh
+          ./cleanup_vps.sh
+          
+          # Deploy
+          cd mqudah-professional-website
+          cp ../.env.production ../.env.production.bak || true
+          cp ../.env.production . 
+          
+          docker compose down --remove-orphans || true
+          docker compose up -d --build
+          
+          # Cleanup cache
+          rm -rf /root/deploy-cache
