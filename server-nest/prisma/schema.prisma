@@ -1,0 +1,491 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+enum MfaType {
+  TOTP
+  EMAIL
+}
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  REFRESH
+  MFA_ENABLE
+  MFA_DISABLE
+  PASSWORD_CHANGE
+  SENSITIVE_ACCESS
+}
+
+enum SocialProvider {
+  GOOGLE
+  GITHUB
+}
+
+enum AuditStatus {
+  SUCCESS
+  FAILURE
+}
+
+model User {
+  id                      String                    @id @default(uuid())
+  name                    String
+  email                   String                    @unique
+  password_hash           String
+  role                    UserRole                  @default(STUDENT)
+  isVerified              Boolean                   @default(false) @map("is_verified")
+  currentHashedRefreshToken String?     // @deprecated in favor of refresh_tokens table
+
+  isMfaEnabled            Boolean                   @default(false) @map("is_mfa_enabled")
+
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  enrollments             Enrollment[]
+  workshop_registrations  WorkshopRegistration[]
+  payments                Payment[]
+  instructed_courses      Course[]                  @relation("CourseInstructor")
+  
+  refreshTokens           RefreshToken[]
+  mfaSettings             MfaSetting?
+  auditLogs               AuditLog[]
+  socialAccounts          SocialAccount[]
+
+  // Phase 2 Expansion
+  reviews                 Review[]
+  discussion_posts        DiscussionPost[]
+  discussion_replies      DiscussionReply[]
+  preferences             UserPreference?
+  instructor_profile      InstructorProfile?
+  subscriptions           Subscription[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id                      String                    @id @default(uuid())
+  
+  userId                  String                    @map("user_id")
+  user                    User                      @relation(fields: [userId], references: [id])
+
+  tokenHash               String                    @map("token_hash")
+  deviceInfo              String?                   @map("device_info")
+  
+  expiresAt               DateTime                  @map("expires_at")
+  revokedAt               DateTime?                 @map("revoked_at")
+  replacedByTokenId       String?                   @map("replaced_by_token_id")
+
+  createdAt               DateTime                  @default(now()) @map("created_at")
+
+  @@map("refresh_tokens")
+  @@index([userId])
+  @@index([tokenHash])
+}
+
+model MfaSetting {
+  id                      String                    @id @default(uuid())
+  
+  userId                  String                    @unique @map("user_id")
+  user                    User                      @relation(fields: [userId], references: [id])
+
+  isEnabled               Boolean                   @default(false) @map("is_enabled")
+  secret                  String
+  backupCodes             String[]                  @map("backup_codes")
+  type                    MfaType                   @default(TOTP)
+
+  createdAt               DateTime                  @default(now()) @map("created_at")
+  updatedAt               DateTime                  @updatedAt @map("updated_at")
+
+  @@map("mfa_settings")
+}
+
+model AuditLog {
+  id                      String                    @id @default(uuid())
+  
+  userId                  String?                   @map("user_id")
+  user                    User?                     @relation(fields: [userId], references: [id])
+
+  action                  AuditAction
+  status                  AuditStatus
+  
+  ipAddress               String?                   @map("ip_address")
+  userAgent               String?                   @map("user_agent")
+  details                 Json?
+
+  createdAt               DateTime                  @default(now()) @map("created_at")
+
+  @@map("audit_logs")
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model SocialAccount {
+  id                      String                    @id @default(uuid())
+  
+  userId                  String                    @map("user_id")
+  user                    User                      @relation(fields: [userId], references: [id])
+
+  provider                SocialProvider
+  providerId              String                    @map("provider_id")
+  
+  createdAt               DateTime                  @default(now()) @map("created_at")
+  updatedAt               DateTime                  @updatedAt @map("updated_at")
+
+  @@unique([provider, providerId])
+  @@map("social_accounts")
+}
+
+model Course {
+  id                      String                    @id @default(uuid())
+  title                   String
+  slug                    String                    @unique
+  description             String
+  cover_image_url         String?
+  duration                String                    @default("0")
+  level                   String                    @default("beginner") // Using String to verify Drizzle compat (or use Enum if strict)
+  price                   Int                       // In smallest currency unit (e.g., cents)
+  currency                String                    @default("USD")
+  is_published            Boolean                   @default(false)
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  enrollments             Enrollment[]
+  modules                 ContentModule[]
+  attachments             AttachmentFile[]          @relation("CourseAttachments")
+  linked_workshops        CourseWorkshop[]
+
+  // Phase 2 Expansion
+  reviews                 Review[]
+  categories              CourseCategory[]
+  discussion_posts        DiscussionPost[]
+
+  instructor              User                      @relation("CourseInstructor", fields: [instructor_id], references: [id])
+  instructor_id           String
+
+  @@map("courses")
+}
+
+model Workshop {
+  id                      String                    @id @default(uuid())
+  title                   String
+  slug                    String                    @unique
+  description             String
+  start_time              DateTime
+  duration_minutes        Int
+  price                   Int
+  currency                String                    @default("USD")
+  is_free                 Boolean                   @default(false)
+  cover_image_url         String?
+  is_published            Boolean                   @default(false)
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  registrations           WorkshopRegistration[]
+  attachments             AttachmentFile[]          @relation("WorkshopAttachments")
+  linked_courses          CourseWorkshop[]
+
+  @@map("workshops")
+}
+
+model Enrollment {
+  id                      String                    @id @default(uuid())
+  enrolled_at             DateTime                  @default(now())
+
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String
+
+  course                  Course                    @relation(fields: [course_id], references: [id])
+  course_id               String
+
+  payment                 Payment                   @relation(fields: [payment_id], references: [id])
+  payment_id              String
+
+  // Phase 2 Expansion
+  progress                LessonProgress[]
+  certificate             Certificate?
+  
+  status                  String                    @default("active") // active, completed, dropped
+  progress_percentage     Int                       @default(0)
+  last_accessed_at        DateTime?
+  completed_at            DateTime?
+
+  @@map("enrollments")
+}
+
+model WorkshopRegistration {
+  id                      String                    @id @default(uuid())
+  registered_at           DateTime                  @default(now())
+
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String
+
+  workshop                Workshop                  @relation(fields: [workshop_id], references: [id])
+  workshop_id             String
+
+  payment                 Payment?                  @relation(fields: [payment_id], references: [id])
+  payment_id              String?                   // Nullable for free workshops
+
+  @@map("workshop_registrations")
+}
+
+model Payment {
+  id                      String                    @id @default(uuid())
+  amount                  Int
+  currency                String
+  status                  String                    // e.g., 'pending', 'succeeded', 'failed'
+  provider                String                    // e.g., 'stripe'
+  provider_payment_id     String?                   @unique
+  created_at              DateTime                  @default(now())
+
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String
+
+  enrollment              Enrollment[]
+  workshop_registration   WorkshopRegistration[]
+
+  @@map("payments")
+}
+
+// Junction table for many-to-many relationship between Courses and Workshops
+model CourseWorkshop {
+  course                  Course                    @relation(fields: [course_id], references: [id])
+  course_id               String
+
+  workshop                Workshop                  @relation(fields: [workshop_id], references: [id])
+  workshop_id             String
+
+  @@id([course_id, workshop_id])
+  @@map("course_workshops")
+}
+
+model ContentModule {
+  id                      String                    @id @default(uuid())
+  title                   String
+  order_index             Int
+
+  course                  Course                    @relation(fields: [course_id], references: [id])
+  course_id               String
+
+  lessons                 Lesson[]
+
+  @@map("content_modules")
+}
+
+model Lesson {
+  id                      String                    @id @default(uuid())
+  title                   String
+  content_text            String?
+  video_url               String?
+  order_index             Int
+
+  module                  ContentModule             @relation(fields: [module_id], references: [id])
+  module_id               String
+
+  // Phase 2 Expansion
+  progress                LessonProgress[]
+  discussion_posts        DiscussionPost[]
+
+  @@map("lessons")
+}
+
+// Polymorphic-like attachments
+model AttachmentFile {
+  id                      String                    @id @default(uuid())
+  file_name               String
+  file_url                String
+  is_public               Boolean                   @default(false) // For pre-enrollment access
+
+  // Attach to either a Course or a Workshop
+  course                  Course?                   @relation("CourseAttachments", fields: [course_id], references: [id])
+  course_id               String?
+
+  workshop                Workshop?                 @relation("WorkshopAttachments", fields: [workshop_id], references: [id])
+  workshop_id             String?
+
+  @@map("attachment_files")
+}
+
+// Phase 2: Expanded Models
+
+model LessonProgress {
+  id                      String                    @id @default(uuid())
+  
+  enrollment              Enrollment                @relation(fields: [enrollment_id], references: [id])
+  enrollment_id           String
+
+  lesson                  Lesson                    @relation(fields: [lesson_id], references: [id])
+  lesson_id               String
+
+  is_completed            Boolean                   @default(false)
+  completed_at            DateTime?
+  time_spent_seconds      Int                       @default(0)
+  last_accessed_at        DateTime                  @default(now())
+
+  @@unique([enrollment_id, lesson_id])
+  @@map("lesson_progress")
+}
+
+model Review {
+  id                      String                    @id @default(uuid())
+  rating                  Int                       
+  comment                 String?
+  
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String
+
+  course                  Course                    @relation(fields: [course_id], references: [id])
+  course_id               String
+
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  @@map("reviews")
+}
+
+model Certificate {
+  id                      String                    @id @default(uuid())
+  certificate_number      String                    @unique
+  issued_at               DateTime                  @default(now())
+  pdf_url                 String?
+
+  enrollment              Enrollment                @relation(fields: [enrollment_id], references: [id])
+  enrollment_id           String                    @unique
+
+  @@map("certificates")
+}
+
+model Category {
+  id                      String                    @id @default(uuid())
+  name                    String
+  slug                    String                    @unique
+  description             String?
+  
+  parent_id               String?
+  parent                  Category?                 @relation("CategoryHierarchy", fields: [parent_id], references: [id])
+  children                Category[]                @relation("CategoryHierarchy")
+
+  courses                 CourseCategory[]
+
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  @@map("categories")
+}
+
+model CourseCategory {
+  course                  Course                    @relation(fields: [course_id], references: [id])
+  course_id               String
+
+  category                Category                  @relation(fields: [category_id], references: [id])
+  category_id             String
+
+  @@id([course_id, category_id])
+  @@map("course_categories")
+}
+
+model UserPreference {
+  id                      String                    @id @default(uuid())
+  
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String                    @unique
+
+  email_notifications     Boolean                   @default(true)
+  push_notifications      Boolean                   @default(false)
+  language                String                    @default("en")
+  timezone                String                    @default("UTC")
+
+  updated_at              DateTime                  @updatedAt
+
+  @@map("user_preferences")
+}
+
+model InstructorProfile {
+  id                      String                    @id @default(uuid())
+  
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String                    @unique
+
+  bio                     String?
+  headline                String?
+  website_url             String?
+  linkedin_url            String?
+  twitter_url             String?
+  
+  is_verified             Boolean                   @default(false)
+
+  updated_at              DateTime                  @updatedAt
+
+  @@map("instructor_profiles")
+}
+
+model Subscription {
+  id                      String                    @id @default(uuid())
+  
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String
+
+  plan_id                 String                    // e.g. 'pro_monthly'
+  status                  String                    // 'active', 'canceled', 'expired'
+  
+  start_date              DateTime
+  end_date                DateTime
+  
+  provider_subscription_id String?                  @unique // Stripe sub ID
+
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  @@map("subscriptions")
+}
+
+model DiscussionPost {
+  id                      String                    @id @default(uuid())
+  title                   String?
+  content                 String
+  
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String
+
+  course                  Course                    @relation(fields: [course_id], references: [id])
+  course_id               String
+
+  lesson                  Lesson?                   @relation(fields: [lesson_id], references: [id])
+  lesson_id               String?
+
+  replies                 DiscussionReply[]
+
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  @@map("discussion_posts")
+}
+
+model DiscussionReply {
+  id                      String                    @id @default(uuid())
+  content                 String
+  
+  post                    DiscussionPost            @relation(fields: [post_id], references: [id])
+  post_id                 String
+
+  user                    User                      @relation(fields: [user_id], references: [id])
+  user_id                 String
+
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
+
+  @@map("discussion_replies")
+}

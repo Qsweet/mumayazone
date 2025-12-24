@@ -1,0 +1,72 @@
+
+> server-nest@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json
+
+FAIL test/auth.e2e-spec.ts
+  AuthController (e2e)
+    × /auth/register (POST) (6 ms)
+    × /auth/login (POST)
+    × /auth/refresh (POST)
+    × /auth/logout (POST) (1 ms)
+
+  ● AuthController (e2e) › /auth/register (POST)
+
+    TypeError: cookieParser is not a function
+
+    [0m [90m 17 |[39m         app [33m=[39m moduleFixture[33m.[39mcreateNestApplication()[33m;[39m
+     [90m 18 |[39m         app[33m.[39museGlobalPipes([36mnew[39m [33mValidationPipe[39m({ whitelist[33m:[39m [36mtrue[39m }))[33m;[39m
+    [31m[1m>[22m[39m[90m 19 |[39m         app[33m.[39muse(cookieParser())[33m;[39m
+     [90m    |[39m                 [31m[1m^[22m[39m
+     [90m 20 |[39m         [36mawait[39m app[33m.[39minit()[33m;[39m
+     [90m 21 |[39m
+     [90m 22 |[39m         prisma [33m=[39m app[33m.[39m[36mget[39m([33mPrismaService[39m)[33m;[39m[0m
+
+      at Object.<anonymous> (auth.e2e-spec.ts:19:17)
+
+  ● AuthController (e2e) › /auth/login (POST)
+
+    TypeError: cookieParser is not a function
+
+    [0m [90m 17 |[39m         app [33m=[39m moduleFixture[33m.[39mcreateNestApplication()[33m;[39m
+     [90m 18 |[39m         app[33m.[39museGlobalPipes([36mnew[39m [33mValidationPipe[39m({ whitelist[33m:[39m [36mtrue[39m }))[33m;[39m
+    [31m[1m>[22m[39m[90m 19 |[39m         app[33m.[39muse(cookieParser())[33m;[39m
+     [90m    |[39m                 [31m[1m^[22m[39m
+     [90m 20 |[39m         [36mawait[39m app[33m.[39minit()[33m;[39m
+     [90m 21 |[39m
+     [90m 22 |[39m         prisma [33m=[39m app[33m.[39m[36mget[39m([33mPrismaService[39m)[33m;[39m[0m
+
+      at Object.<anonymous> (auth.e2e-spec.ts:19:17)
+
+  ● AuthController (e2e) › /auth/refresh (POST)
+
+    TypeError: cookieParser is not a function
+
+    [0m [90m 17 |[39m         app [33m=[39m moduleFixture[33m.[39mcreateNestApplication()[33m;[39m
+     [90m 18 |[39m         app[33m.[39museGlobalPipes([36mnew[39m [33mValidationPipe[39m({ whitelist[33m:[39m [36mtrue[39m }))[33m;[39m
+    [31m[1m>[22m[39m[90m 19 |[39m         app[33m.[39muse(cookieParser())[33m;[39m
+     [90m    |[39m                 [31m[1m^[22m[39m
+     [90m 20 |[39m         [36mawait[39m app[33m.[39minit()[33m;[39m
+     [90m 21 |[39m
+     [90m 22 |[39m         prisma [33m=[39m app[33m.[39m[36mget[39m([33mPrismaService[39m)[33m;[39m[0m
+
+      at Object.<anonymous> (auth.e2e-spec.ts:19:17)
+
+  ● AuthController (e2e) › /auth/logout (POST)
+
+    TypeError: cookieParser is not a function
+
+    [0m [90m 17 |[39m         app [33m=[39m moduleFixture[33m.[39mcreateNestApplication()[33m;[39m
+     [90m 18 |[39m         app[33m.[39museGlobalPipes([36mnew[39m [33mValidationPipe[39m({ whitelist[33m:[39m [36mtrue[39m }))[33m;[39m
+    [31m[1m>[22m[39m[90m 19 |[39m         app[33m.[39muse(cookieParser())[33m;[39m
+     [90m    |[39m                 [31m[1m^[22m[39m
+     [90m 20 |[39m         [36mawait[39m app[33m.[39minit()[33m;[39m
+     [90m 21 |[39m
+     [90m 22 |[39m         prisma [33m=[39m app[33m.[39m[36mget[39m([33mPrismaService[39m)[33m;[39m[0m
+
+      at Object.<anonymous> (auth.e2e-spec.ts:19:17)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 4 total
+Snapshots:   0 total
+Time:        2.655 s, estimated 3 s
+Ran all test suites.

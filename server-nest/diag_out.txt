@@ -1,0 +1,27 @@
+STDOUT:
+
+> server-nest@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json test/enrollment.e2e-spec.ts
+
+
+
+STDERR:
+PASS test/enrollment.e2e-spec.ts (5.08 s)
+  Enrollment System (e2e)
+    √ Setup: Register Users (1783 ms)
+    √ Setup: Create Course (214 ms)
+    √ Example: Student cannot access un-enrolled course content (if we hid it) (1 ms)
+    √ Checkout (POST /enrollments/checkout/:courseId) (769 ms)
+    √ Confirm Payment (POST /enrollments/confirm) (620 ms)
+    √ Verify Enrollment (GET /enrollments/my) (42 ms)
+    √ Double enrollment should fail (54 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        5.469 s, estimated 10 s
+Ran all test suites matching test/enrollment.e2e-spec.ts.
+
+
+ERROR:
+null

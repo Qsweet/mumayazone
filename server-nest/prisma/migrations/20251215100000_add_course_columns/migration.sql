@@ -1,0 +1,4 @@
+-- This migration is skipped because columns 'level' and 'duration' already exist in the database.
+-- Original intent was:
+-- ALTER TABLE "courses" ADD COLUMN "duration" TEXT NOT NULL DEFAULT '0';
+-- ALTER TABLE "courses" ADD COLUMN "level" TEXT NOT NULL DEFAULT 'beginner';
