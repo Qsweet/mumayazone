@@ -1,0 +1,5 @@
+packages:
+  - 'packages/*'
+  - 'mqudah-professional-website'
+  - 'server-nest'
+  - 'client-next'
