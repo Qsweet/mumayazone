@@ -1,0 +1,306 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Qudah." [ref=e4] [cursor=pointer]:
+        - /url: /en
+        - generic [ref=e6]: Qudah.
+      - navigation [ref=e7]:
+        - link "Services" [ref=e8] [cursor=pointer]:
+          - /url: /en/services
+        - link "Courses" [ref=e9] [cursor=pointer]:
+          - /url: /en/courses
+        - link "Workshops" [ref=e10] [cursor=pointer]:
+          - /url: /en/workshops
+        - link "Insights" [ref=e11] [cursor=pointer]:
+          - /url: /en/blog
+        - link "About" [ref=e12] [cursor=pointer]:
+          - /url: /en/about
+      - generic [ref=e13]:
+        - button "العربية" [ref=e14]:
+          - img [ref=e15]
+          - generic [ref=e18]: العربية
+        - link "Login" [ref=e19] [cursor=pointer]:
+          - /url: /en/login
+        - link "Register" [ref=e20] [cursor=pointer]:
+          - /url: /en/register
+          - button "Register" [ref=e21]
+  - main [ref=e22]:
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - img [ref=e26]
+          - generic [ref=e29]: Redefining Digital Leadership
+        - heading "Redefining Digital Leadership" [level=1] [ref=e30]
+        - paragraph [ref=e31]: Empowering businesses through high-performance web architectures, scalable mobile ecosystems, and strategic technical foresight.
+        - generic [ref=e32]:
+          - link "View My Work" [ref=e33] [cursor=pointer]:
+            - /url: /contact
+            - generic [ref=e34]: View My Work
+            - img [ref=e35]
+          - link "Get in Touch" [ref=e37] [cursor=pointer]:
+            - /url: /services
+      - generic [ref=e39]: Scroll
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - img [ref=e44]
+          - text: Core Expertise
+        - heading "Mastery Across the Stack" [level=2] [ref=e47]
+        - paragraph [ref=e48]: Empowering businesses through high-performance web architectures, scalable mobile ecosystems, and strategic technical foresight.
+      - generic [ref=e49]:
+        - generic [ref=e50]:
+          - generic:
+            - generic:
+              - img
+            - heading "Enterprise Web Architecture" [level=3]
+            - paragraph: Next-generation Next.js & React ecosystems built for speed, SEO, and global scale.
+          - link "Read More" [ref=e53] [cursor=pointer]:
+            - /url: /services
+            - button "Read More" [ref=e54]:
+              - text: Read More
+              - img [ref=e55]
+        - generic [ref=e57]:
+          - generic:
+            - generic:
+              - img
+            - heading "Mobile Engineering" [level=3]
+            - paragraph: Native-grade cross-platform experiences using Flutter & React Native.
+          - link "Read More" [ref=e60] [cursor=pointer]:
+            - /url: /services
+            - button "Read More" [ref=e61]:
+              - text: Read More
+              - img [ref=e62]
+        - generic [ref=e64]:
+          - generic:
+            - generic:
+              - img
+            - heading "Cloud & Distributed Systems" [level=3]
+            - paragraph: Resilient Microservices and Serverless infrastructure on AWS and Google Cloud.
+          - link "Read More" [ref=e67] [cursor=pointer]:
+            - /url: /services
+            - button "Read More" [ref=e68]:
+              - text: Read More
+              - img [ref=e69]
+        - generic [ref=e71]:
+          - generic:
+            - generic:
+              - img
+            - heading "Strategic Consulting" [level=3]
+            - paragraph: Technical leadership to guide your digital transformation and team growth.
+          - link "Contact Us" [ref=e74] [cursor=pointer]:
+            - /url: /contact
+            - button "Contact Us" [ref=e75]:
+              - text: Contact Us
+              - img [ref=e76]
+    - generic [ref=e80]:
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - text: Academy
+          - heading "Featured Courses" [level=2] [ref=e83]
+          - paragraph [ref=e84]: Level up your technical career with industry-standard curriculums.
+        - link "View All Courses" [ref=e85] [cursor=pointer]:
+          - /url: /courses
+          - text: View All Courses
+          - img [ref=e86]
+      - generic [ref=e89]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - img [ref=e95]
+            - generic [ref=e97]: intermediate
+          - heading "Digital Transformation Strategies" [level=3] [ref=e99]
+          - generic [ref=e100]:
+            - paragraph [ref=e101]: A comprehensive guide to digitizing your operations and culture.
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - img [ref=e104]
+                - generic [ref=e107]: 18h 45m
+              - generic [ref=e108]:
+                - img [ref=e109]
+                - generic [ref=e111]: Online
+          - link "View Course" [ref=e113] [cursor=pointer]:
+            - /url: /courses/digital-transformation
+            - text: View Course
+            - img [ref=e114]
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - img [ref=e121]
+            - generic [ref=e123]: advanced
+          - heading "Advanced Leadership Mastery" [level=3] [ref=e125]
+          - generic [ref=e126]:
+            - paragraph [ref=e127]: Develop executive presence and lead high-performing teams in a digital-first world.
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - img [ref=e130]
+                - generic [ref=e133]: 24h 00m
+              - generic [ref=e134]:
+                - img [ref=e135]
+                - generic [ref=e137]: Online
+          - link "View Course" [ref=e139] [cursor=pointer]:
+            - /url: /courses/leadership-mastery
+            - text: View Course
+            - img [ref=e140]
+        - generic [ref=e144]:
+          - generic [ref=e145]:
+            - img [ref=e147]
+            - generic [ref=e149]: beginner
+          - heading "AI Fundamentals for Business" [level=3] [ref=e151]
+          - generic [ref=e152]:
+            - paragraph [ref=e153]: Master the basics of Artificial Intelligence and how to leverage it for business growth in 2025.
+            - generic [ref=e154]:
+              - generic [ref=e155]:
+                - img [ref=e156]
+                - generic [ref=e159]: 15h 30m
+              - generic [ref=e160]:
+                - img [ref=e161]
+                - generic [ref=e163]: Online
+          - link "View Course" [ref=e165] [cursor=pointer]:
+            - /url: /courses/ai-fundamentals
+            - text: View Course
+            - img [ref=e166]
+    - generic [ref=e168]:
+      - generic [ref=e169]:
+        - generic [ref=e170]:
+          - text: Intel
+          - heading "Latest Insights" [level=2] [ref=e171]
+          - paragraph [ref=e172]: Deep dives into software architecture, engineering leadership, and AI.
+        - link "Read the Blog" [ref=e173] [cursor=pointer]:
+          - /url: /blog
+          - text: Read the Blog
+          - img [ref=e174]
+      - generic [ref=e177]:
+        - generic [ref=e179]:
+          - generic [ref=e181]: MQ
+          - heading "Mastering TypeScript Generics" [level=3] [ref=e183]
+          - paragraph [ref=e185]: A comprehensive guide to understanding and using Generics in TypeScript for type-safe code.
+          - generic [ref=e187]:
+            - generic [ref=e188]:
+              - img [ref=e190]
+              - generic [ref=e193]: Mohammad Qudah
+            - generic [ref=e194]:
+              - img [ref=e195]
+              - generic [ref=e197]: Dec 14, 2025
+          - link "Read Mastering TypeScript Generics" [ref=e198] [cursor=pointer]:
+            - /url: /blog/mastering-typescript
+            - generic [ref=e199]: Read Mastering TypeScript Generics
+        - generic [ref=e201]:
+          - generic [ref=e203]: MQ
+          - heading "The Mqudah Vision 2025" [level=3] [ref=e205]
+          - paragraph [ref=e207]: Our roadmap for bridging the gap between academic theory and professional industry standards.
+          - generic [ref=e209]:
+            - generic [ref=e210]:
+              - img [ref=e212]
+              - generic [ref=e215]: Mohammad Qudah
+            - generic [ref=e216]:
+              - img [ref=e217]
+              - generic [ref=e219]: Dec 14, 2025
+          - link "Read The Mqudah Vision 2025" [ref=e220] [cursor=pointer]:
+            - /url: /blog/mqudah-vision-2025
+            - generic [ref=e221]: Read The Mqudah Vision 2025
+        - generic [ref=e223]:
+          - generic [ref=e225]: MQ
+          - heading "Challenges in Arabic NLP" [level=3] [ref=e227]
+          - paragraph [ref=e229]: Why Arabic poses unique challenges for Large Language Models and how we are solving them.
+          - generic [ref=e231]:
+            - generic [ref=e232]:
+              - img [ref=e234]
+              - generic [ref=e237]: Mohammad Qudah
+            - generic [ref=e238]:
+              - img [ref=e239]
+              - generic [ref=e241]: Dec 14, 2025
+          - link "Read Challenges in Arabic NLP" [ref=e242] [cursor=pointer]:
+            - /url: /blog/arabic-nlp-challenges
+            - generic [ref=e243]: Read Challenges in Arabic NLP
+    - generic [ref=e249]:
+      - img [ref=e251]
+      - heading "Stay Ahead of the Curve" [level=2] [ref=e254]
+      - paragraph [ref=e255]: Join 5,000+ developers and leaders receiving weekly insights on modern architecture and AI trends.
+      - generic [ref=e256]:
+        - generic [ref=e257]:
+          - img [ref=e258]
+          - textbox "Enter your email" [ref=e261]
+        - button "Subscribe Now" [ref=e262]:
+          - text: Subscribe Now
+          - img [ref=e263]
+      - paragraph [ref=e265]: No spam. Unsubscribe at any time.
+  - contentinfo [ref=e266]:
+    - generic [ref=e267]:
+      - generic [ref=e268]:
+        - generic [ref=e269]:
+          - link "M Mqudah" [ref=e270] [cursor=pointer]:
+            - /url: /en
+            - generic [ref=e272]: M
+            - generic [ref=e273]: Mqudah
+          - paragraph [ref=e274]: Architecting the future of digital experiences with precision and innovation.
+          - generic [ref=e275]:
+            - link "LinkedIn" [ref=e276] [cursor=pointer]:
+              - /url: https://linkedin.com/in/mqudah
+              - img [ref=e277]
+            - link "X (Twitter)" [ref=e281] [cursor=pointer]:
+              - /url: https://x.com/mqudah
+              - img [ref=e282]
+            - link "Instagram" [ref=e284] [cursor=pointer]:
+              - /url: https://instagram.com/mqudah
+              - img [ref=e285]
+            - link "YouTube" [ref=e288] [cursor=pointer]:
+              - /url: https://youtube.com/@mqudah
+              - img [ref=e289]
+        - generic [ref=e292]:
+          - heading "Quick Links" [level=4] [ref=e293]
+          - list [ref=e294]:
+            - listitem [ref=e295]:
+              - link "About Mqudah" [ref=e296] [cursor=pointer]:
+                - /url: /en/about
+            - listitem [ref=e297]:
+              - link "Our Services" [ref=e298] [cursor=pointer]:
+                - /url: /en/services
+            - listitem [ref=e299]:
+              - link "Workshops" [ref=e300] [cursor=pointer]:
+                - /url: /en/workshops
+            - listitem [ref=e301]:
+              - link "Blog" [ref=e302] [cursor=pointer]:
+                - /url: /en/blog
+        - generic [ref=e303]:
+          - heading "Latest Courses" [level=4] [ref=e304]:
+            - text: Latest Courses
+            - img [ref=e305]
+          - list [ref=e308]:
+            - listitem [ref=e309]:
+              - link "Digital Transformation Strategies View Course" [ref=e310] [cursor=pointer]:
+                - /url: /en/courses/digital-transformation
+                - generic [ref=e311]: Digital Transformation Strategies
+                - text: View Course
+            - listitem [ref=e312]:
+              - link "Advanced Leadership Mastery View Course" [ref=e313] [cursor=pointer]:
+                - /url: /en/courses/leadership-mastery
+                - generic [ref=e314]: Advanced Leadership Mastery
+                - text: View Course
+            - listitem [ref=e315]:
+              - link "AI Fundamentals for Business View Course" [ref=e316] [cursor=pointer]:
+                - /url: /en/courses/ai-fundamentals
+                - generic [ref=e317]: AI Fundamentals for Business
+                - text: View Course
+        - generic [ref=e318]:
+          - heading "Legal & Contact Us" [level=4] [ref=e319]
+          - list [ref=e320]:
+            - listitem [ref=e321]:
+              - link "Privacy Policy" [ref=e322] [cursor=pointer]:
+                - /url: /en/privacy
+            - listitem [ref=e323]:
+              - link "Terms of Service" [ref=e324] [cursor=pointer]:
+                - /url: /en/terms
+            - listitem [ref=e325]:
+              - link "Contact Us" [ref=e326] [cursor=pointer]:
+                - /url: /en/contact
+          - link "m.qudah@mumayazone.com" [ref=e328] [cursor=pointer]:
+            - /url: mailto:m.qudah@mumayazone.com
+            - img [ref=e330]
+            - generic [ref=e333]: m.qudah@mumayazone.com
+      - generic [ref=e334]:
+        - paragraph [ref=e335]: © 2025 Mqudah. All rights reserved.
+        - generic [ref=e337]: v3.1.5
+  - region "Notifications alt+T"
+  - alert [ref=e338]
+```

@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular;
+
+  /* Custom Header Colors */
+  --color-deep-black: #0A0E27;
+  --color-purple-primary: #7C3AED;
+  --color-purple-secondary: #A78BFA;
+}
+
+/* Deep Space Theme - HSL Values */
+:root {
+  /* Dark Blue/Zinc Base */
+  --background: hsl(230 25% 6%);
+  --foreground: hsl(210 40% 98%);
+
+  --card: hsl(230 25% 8%);
+  --card-foreground: hsl(210 40% 98%);
+
+  --popover: hsl(230 25% 8%);
+  --popover-foreground: hsl(210 40% 98%);
+
+  /* Electric Indigo Primary */
+  --primary: hsl(250 95% 65%);
+  --primary-foreground: hsl(210 40% 98%);
+
+  --secondary: hsl(230 25% 12%);
+  --secondary-foreground: hsl(210 40% 98%);
+
+  --muted: hsl(230 25% 15%);
+  --muted-foreground: hsl(215 20% 65%);
+
+  /* Neon Mint Accent */
+  --accent: hsl(160 85% 50%);
+  --accent-foreground: hsl(230 25% 6%);
+
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(210 40% 98%);
+
+  --border: hsl(230 25% 12%);
+  --input: hsl(230 25% 12%);
+  --ring: hsl(250 95% 65%);
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* Same as root since we enforce Dark Mode effectively for "Deep Space" */
+  --background: hsl(230 25% 6%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(230 25% 8%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(230 25% 8%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(250 95% 65%);
+  --primary-foreground: hsl(210 40% 98%);
+  --secondary: hsl(230 25% 12%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(230 25% 15%);
+  --muted-foreground: hsl(215 20% 65%);
+  --accent: hsl(160 85% 50%);
+  --accent-foreground: hsl(230 25% 6%);
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(230 25% 12%);
+  --input: hsl(230 25% 12%);
+  --ring: hsl(250 95% 65%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-foreground font-bold;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

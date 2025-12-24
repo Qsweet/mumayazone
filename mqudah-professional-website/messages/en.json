@@ -1,0 +1,123 @@
+{
+    "Navigation": {
+        "home": "Home",
+        "services": "Services",
+        "courses": "Courses",
+        "workshops": "Workshops",
+        "blog": "Insights",
+        "about": "About",
+        "dashboard": "Dashboard"
+    },
+    "Common": {
+        "login": "Login",
+        "register": "Register",
+        "getStarted": "Get Started",
+        "language": "العربية",
+        "readMore": "Read More",
+        "viewAll": "View All",
+        "copyright": "© 2025 Mohammad Al-Qudah. All rights reserved.",
+        "about": "About Mqudah",
+        "services": "Our Services",
+        "courses": "Academy",
+        "workshops": "Workshops",
+        "blog": "Blog",
+        "contact": "Contact Us"
+    },
+    "Hero": {
+        "title": "Redefining Digital Leadership",
+        "headline_benefit": "Redefining Digital Leadership",
+        "subhead_social_proof": "Empowering businesses through high-performance web architectures, scalable mobile ecosystems, and strategic technical foresight.",
+        "description": "Architecting the future of digital experiences with precision and innovation.",
+        "cta_primary": "View My Work",
+        "cta_secondary": "Get in Touch"
+    },
+    "Home": {
+        "bento_title": "Mastery Across the Stack",
+        "featured_courses": "Featured Courses",
+        "featured_courses_subtitle": "Level up your technical career with industry-standard curriculums.",
+        "courses_link": "View All Courses",
+        "latest_insights": "Latest Insights",
+        "latest_insights_subtitle": "Deep dives into software architecture, engineering leadership, and AI.",
+        "blog_link": "Read the Blog"
+    },
+    "services": {
+        "title": "Professional Services",
+        "subtitle": "Strategic consulting and technical expertise for digital transformation.",
+        "cta_title": "Ready to Get Started?",
+        "cta_desc": "Let's discuss your project and how I can help you achieve your digital goals.",
+        "items": {
+            "web": {
+                "title": "Enterprise Web Architecture",
+                "desc": "Next-generation Next.js & React ecosystems built for speed, SEO, and global scale."
+            },
+            "mobile": {
+                "title": "Mobile Engineering",
+                "desc": "Native-grade cross-platform experiences using Flutter & React Native."
+            },
+            "cloud": {
+                "title": "Cloud & Distributed Systems",
+                "desc": "Resilient Microservices and Serverless infrastructure on AWS and Google Cloud."
+            },
+            "consulting": {
+                "title": "Strategic Consulting",
+                "desc": "Technical leadership to guide your digital transformation and team growth."
+            }
+        }
+    },
+    "about": {
+        "title": "About Mohammad Qudah",
+        "description": "Building the future of digital architecture, one solution at a time.",
+        "mission_title": "My Mission",
+        "mission_desc": "To empower organizations with scalable, high-performance digital solutions that drive real business growth.",
+        "vision_title": "My Vision",
+        "vision_desc": "A world where technology seamlessly enhances human potential and business efficiency.",
+        "features": {
+            "experts": "Expert Team",
+            "experts_desc": "Access to top-tier talent.",
+            "vision": "Strategic Vision",
+            "vision_desc": "Long-term roadmap planning.",
+            "speed": "Agile Delivery",
+            "speed_desc": "Rapid iteration and deployment.",
+            "quality": "Elite Quality",
+            "quality_desc": "Zero-compromise engineering."
+        }
+    },
+    "contact": {
+        "title": "Get in Touch",
+        "description": "Let's discuss how I can help with your project.",
+        "info_title": "Contact Information",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Location",
+        "address_value": "Amman, Jordan (Available Globally)",
+        "working_hours": "Working Hours",
+        "working_hours_value": "Mon - Fri, 9am - 5pm",
+        "form_title": "Send a Message",
+        "name": "Full Name",
+        "name_ph": "John Doe",
+        "subject": "Subject",
+        "subject_ph": "Project Inquiry",
+        "message": "Message",
+        "message_ph": "Tell me about your project...",
+        "submit": "Send Message",
+        "sending": "Sending..."
+    },
+    "newsletter": {
+        "title": "Stay Ahead of the Curve",
+        "desc": "Join 5,000+ developers and leaders receiving weekly insights on modern architecture and AI trends.",
+        "cta": "Subscribe Now"
+    },
+    "seo": {
+        "title": "Mohammad Qudah - Digital Architect & Consultant | Web Architecture & AI Strategy",
+        "description": "Discover professional consulting services for web architecture, cloud systems, and digital transformation. Expert guidance from Mohammad Qudah.",
+        "keywords": "Software Architect, Next.js, React, Flutter, Digital Transformation, Engineering Leadership, Mqudah"
+    },
+    "Footer": {
+        "quick_links": "Quick Links",
+        "legal": "Legal",
+        "social": "Connect",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "rights": "© 2025 Mqudah. All rights reserved."
+    }
+}

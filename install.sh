@@ -22,14 +22,23 @@ tar -xzf deployment.tar.gz -C "$REMOTE_DIR"
 
 # Copy envs
 echo "Configuring environment..."
-cp .env.production "$REMOTE_DIR/"
+cp .env.production "$REMOTE_DIR/.env"
 cp .env.production "$REMOTE_DIR/mqudah-professional-website/.env"
 
 # Deploy
 echo "Deploying Docker stack..."
-cd "$REMOTE_DIR/mqudah-professional-website"
-docker compose down --remove-orphans 2>/dev/null || true
-docker compose up -d --build
+# CRITICAL: We must run from ROOT where docker-compose.yml lives
+cd "$REMOTE_DIR"
+
+# Zero-Downtime Strategy: Build first!
+echo "Building images..."
+if ! docker compose build; then
+    echo "❌ BUILD FAILED. Aborting deployment to protect live site."
+    exit 1
+fi
+
+echo "✅ Build successful. Updating containers..."
+docker compose up -d --remove-orphans
 
 echo "Waiting for services to stabilize..."
 sleep 30
