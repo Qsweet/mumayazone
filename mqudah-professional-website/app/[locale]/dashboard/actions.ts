@@ -87,7 +87,7 @@ export async function updateLessonProgress(lessonId: string, isCompleted?: boole
 export async function getResumeCourse() {
     const user = await getUser();
 
-    console.log("--- DEBUG: UPDATED CODE RUNNING: Checking Lesson Progress ---");
+    console.log("--- DEBUG: FORCE TEXT CAST APPLIED ---");
     const lastProgress = await db.query.lessonProgress.findFirst({
         where: eq(lessonProgress.userId, sql`${user.id}::text`),
         orderBy: [desc(lessonProgress.updatedAt)],
