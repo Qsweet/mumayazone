@@ -36,7 +36,7 @@ export async function getCourseProgress(courseId: string) {
         .innerJoin(lessons, eq(lessonProgress.lessonId, lessons.id))
         .innerJoin(contentModules, eq(lessons.moduleId, contentModules.id))
         .where(and(
-            eq(lessonProgress.userId, sql`${user.id}::uuid`),
+            eq(lessonProgress.userId, user.id),
             eq(lessonProgress.isCompleted, true),
             eq(contentModules.courseId, courseId)
         ));
@@ -56,7 +56,7 @@ export async function updateLessonProgress(lessonId: string, isCompleted?: boole
 
     const existing = await db.query.lessonProgress.findFirst({
         where: and(
-            eq(lessonProgress.userId, sql`${user.id}::uuid`),
+            eq(lessonProgress.userId, user.id),
             eq(lessonProgress.lessonId, lessonId)
         )
     });
@@ -72,7 +72,7 @@ export async function updateLessonProgress(lessonId: string, isCompleted?: boole
     } else {
         await db.insert(lessonProgress)
             .values({
-                userId: sql`${user.id}::uuid`,
+                userId: user.id,
                 lessonId,
                 isCompleted: isCompleted ?? false,
                 lastWatchedPosition: lastWatchedPosition ?? 0
@@ -89,7 +89,7 @@ export async function getResumeCourse() {
 
     console.log("--- DEBUG: UPDATED CODE RUNNING: Checking Lesson Progress ---");
     const lastProgress = await db.query.lessonProgress.findFirst({
-        where: eq(lessonProgress.userId, sql`${user.id}::uuid`),
+        where: eq(lessonProgress.userId, user.id),
         orderBy: [desc(lessonProgress.updatedAt)],
         with: {
             lesson: {
@@ -121,7 +121,7 @@ export async function getEnrolledCourses() {
 
     // For now, simpler: just get enrollments
     const userEnrollments = await db.query.enrollments.findMany({
-        where: eq(enrollments.userId, sql`${user.id}::uuid`),
+        where: eq(enrollments.userId, user.id),
         with: {
             course: true
         }

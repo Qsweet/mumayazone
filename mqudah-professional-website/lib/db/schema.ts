@@ -20,7 +20,7 @@ export const socialProviderEnum = pgEnum('social_provider', ['GOOGLE', 'GITHUB']
 
 // Users Table
 export const users = pgTable('users', {
-    id: uuid('id').primaryKey(), // Match Prisma UUID ID
+    id: text('id').primaryKey(), // Using text to match DB legacy
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
     passwordHash: text('password_hash').notNull(),
@@ -41,7 +41,7 @@ export const users = pgTable('users', {
 // Refresh Tokens
 export const refreshTokens = pgTable('refresh_tokens', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id).notNull(),
+    userId: text('user_id').references(() => users.id).notNull(),
     tokenHash: text('token_hash').notNull(),
     deviceInfo: text('device_info'),
     expiresAt: timestamp('expires_at').notNull(),
@@ -53,7 +53,7 @@ export const refreshTokens = pgTable('refresh_tokens', {
 // MFA Settings
 export const mfaSettings = pgTable('mfa_settings', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id).notNull().unique(),
+    userId: text('user_id').references(() => users.id).notNull().unique(),
     isEnabled: boolean('is_enabled').default(false),
     secret: text('secret').notNull(),
     backupCodes: text('backup_codes').array(),
@@ -65,7 +65,7 @@ export const mfaSettings = pgTable('mfa_settings', {
 // Audit Logs
 export const auditLogs = pgTable('audit_logs', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id), // Nullable
+    userId: text('user_id').references(() => users.id), // Nullable
     action: auditActionEnum('action').notNull(),
     status: auditStatusEnum('status').notNull(),
     ipAddress: text('ip_address'),
@@ -77,7 +77,7 @@ export const auditLogs = pgTable('audit_logs', {
 // Social Accounts
 export const socialAccounts = pgTable('social_accounts', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id).notNull(),
+    userId: text('user_id').references(() => users.id).notNull(),
     provider: socialProviderEnum('provider').notNull(),
     providerId: text('provider_id').notNull(),
     createdAt: timestamp('created_at').defaultNow(),
@@ -99,7 +99,7 @@ export const courses = pgTable('courses', {
     level: courseLevelEnum('level').notNull().default('beginner'),
     price: integer('price').notNull().default(0),
     currency: text('currency').default('USD'),
-    instructorId: uuid('instructor_id').references(() => users.id),
+    instructorId: text('instructor_id').references(() => users.id),
     isPublished: boolean('is_published').default(false),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
@@ -145,7 +145,7 @@ export const workshops = pgTable('workshops', {
 // Payments Table (New)
 export const payments = pgTable('payments', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id).notNull(),
+    userId: text('user_id').references(() => users.id).notNull(),
     amount: integer('amount').notNull(),
     currency: text('currency').notNull(),
     status: text('status').notNull(), // 'pending', 'succeeded', 'failed'
@@ -157,7 +157,7 @@ export const payments = pgTable('payments', {
 // Enrollments Table (Updated with payment_id)
 export const enrollments = pgTable('enrollments', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id).notNull(),
+    userId: text('user_id').references(() => users.id).notNull(),
     courseId: uuid('course_id').references(() => courses.id).notNull(),
     paymentId: uuid('payment_id').references(() => payments.id),
     status: enrollmentStatusEnum('status').default('active'),
@@ -168,7 +168,7 @@ export const enrollments = pgTable('enrollments', {
 // Workshop Registrations Table (New)
 export const workshopRegistrations = pgTable('workshop_registrations', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id).notNull(),
+    userId: text('user_id').references(() => users.id).notNull(),
     workshopId: uuid('workshop_id').references(() => workshops.id).notNull(),
     paymentId: uuid('payment_id').references(() => payments.id), // Nullable for free workshops
     registeredAt: timestamp('registered_at').defaultNow(),
@@ -231,7 +231,7 @@ export const blogPosts = pgTable('blog_posts', {
     seoDescription: text('seo_description'),
     tags: text('tags').array(), // Low-level tags array
     readingTime: integer('reading_time'), // AI-calculated
-    authorId: uuid('author_id').references(() => users.id).notNull(),
+    authorId: text('author_id').references(() => users.id).notNull(),
     // blogPosts (new) can keep uuid or switch to text. Switching to avoid mix?
     // references categories.id (now text) implies categoryId must be text.
     categoryId: text('category_id').references(() => categories.id),
@@ -285,7 +285,7 @@ export const usersRelations = relations(users, ({ many, one }) => ({
 // Lesson Progress (Phase 3)
 export const lessonProgress = pgTable('lesson_progress', {
     id: uuid('id').primaryKey(),
-    userId: uuid('user_id').references(() => users.id).notNull(),
+    userId: text('user_id').references(() => users.id).notNull(),
     lessonId: uuid('lesson_id').references(() => lessons.id).notNull(),
     isCompleted: boolean('is_completed').default(false),
     lastWatchedPosition: integer('last_watched_position').default(0), // in seconds
