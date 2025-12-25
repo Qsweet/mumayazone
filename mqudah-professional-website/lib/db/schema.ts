@@ -185,7 +185,7 @@ export const courseWorkshops = pgTable('course_workshops', {
 // Content Modules (New)
 export const contentModules = pgTable('content_modules', {
     id: uuid('id').primaryKey(),
-    courseId: text('course_id').references(() => courses.id).notNull(),
+    courseId: uuid('course_id').references(() => courses.id).notNull(),
     title: text('title').notNull(),
     orderIndex: integer('order_index').notNull(),
 }, (t) => ({
