@@ -25,13 +25,17 @@ export const users = pgTable('users', {
     email: text('email').notNull().unique(),
     passwordHash: text('password_hash').notNull(),
     role: userRoleEnum('role').default('user'),
+    phone: text('phone'),
+    languagePreference: text('language_preference').default('en'),
     isVerified: boolean('is_verified').default(false),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
-    currentHashedRefreshToken: text('currentHashedRefreshToken'), // Legacy Phase 1 column
+    currentHashedRefreshToken: text('currentHashedRefreshToken'),
 
     // Auth v2
     isMfaEnabled: boolean('is_mfa_enabled').default(false),
+    permissions: jsonb('permissions'),
+    deletedAt: timestamp('deleted_at'),
 }, (t) => ({
     emailIdx: index('users_email_idx').on(t.email),
 }));
@@ -103,6 +107,7 @@ export const courses = pgTable('courses', {
     isPublished: boolean('is_published').default(false),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
+    deletedAt: timestamp('deleted_at'),
 }, (t) => ({
     instructorIdx: index('courses_instructor_idx').on(t.instructorId),
     slugIdx: index('courses_slug_idx').on(t.slug),
@@ -125,6 +130,7 @@ export const workshops = pgTable('workshops', {
     isPublished: boolean('is_published').default(false),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
+    deletedAt: timestamp('deleted_at'),
 });
 
 // ... (skipping payments, enrollments, etc for brevity in this replacement block if possible, but replace_file_content needs contiguous block. I will just replace the specific tables separately or a large block if they are close. They are somewhat close. I will do separate replace calls or one large one.
@@ -188,6 +194,7 @@ export const contentModules = pgTable('content_modules', {
     courseId: uuid('course_id').references(() => courses.id).notNull(),
     title: text('title').notNull(),
     orderIndex: integer('order_index').notNull(),
+    deletedAt: timestamp('deleted_at'),
 }, (t) => ({
     courseIdx: index('modules_course_idx').on(t.courseId),
 }));
@@ -200,6 +207,7 @@ export const lessons = pgTable('lessons', {
     contentText: text('content_text'),
     videoUrl: text('video_url'),
     orderIndex: integer('order_index').notNull(),
+    deletedAt: timestamp('deleted_at'),
 }, (t) => ({
     moduleIdx: index('lessons_module_idx').on(t.moduleId),
 }));
@@ -239,6 +247,7 @@ export const blogPosts = pgTable('blog_posts', {
     publishedAt: timestamp('published_at'),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
+    deletedAt: timestamp('deleted_at'),
 }, (t) => ({
     authorIdx: index('blog_posts_author_idx').on(t.authorId),
     slugIdx: index('blog_posts_slug_idx').on(t.slug),

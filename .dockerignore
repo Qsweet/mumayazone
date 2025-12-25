@@ -1,0 +1,32 @@
+# --- Dependencies ---
+# Crucial: Forces Docker to install fresh dependencies based on lockfile
+node_modules
+.pnpm-store
+
+# --- Build Artifacts ---
+# Crucial: Prevent local builds from leaking into the container
+dist
+.next
+build
+out
+.turbo
+
+# --- Environment & Secrets ---
+# Safety: Prevent accidental baking of local secrets into the image
+.env
+.env.local
+.env.*
+
+# --- Version Control ---
+.git
+.gitignore
+.github
+
+# --- Logs & Debugging ---
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+coverage
+.vscode
+.idea
+*.md

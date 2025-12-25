@@ -26,6 +26,10 @@ Write-Host "Executing remote..." -ForegroundColor Yellow
 $cmd = "cd /root && sed -i 's/\r$//' cleanup_vps.sh && sed -i 's/\r$//' install.sh && chmod +x cleanup_vps.sh install.sh && ./install.sh"
 
 ssh -i $KEY_PATH -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_IP} $cmd
+# Post-deployment migration check
+Write-Host "Running strict migrations..." -ForegroundColor Yellow
+$migrate_cmd = "docker exec mqudah-docker-frontend-1 pnpm db:migrate"
+ssh -i $KEY_PATH -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_IP} $migrate_cmd
 
 Remove-Item deployment.tar.gz -ErrorAction SilentlyContinue
 Write-Host "DONE! Visit https://mumayazone.com" -ForegroundColor Green

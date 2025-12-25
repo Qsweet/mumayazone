@@ -6,7 +6,7 @@ CREATE TYPE "public"."mfa_type" AS ENUM('TOTP', 'EMAIL');--> statement-breakpoin
 CREATE TYPE "public"."social_provider" AS ENUM('GOOGLE', 'GITHUB');--> statement-breakpoint
 CREATE TYPE "public"."user_role" AS ENUM('user', 'admin', 'instructor');--> statement-breakpoint
 CREATE TABLE "attachment_files" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"entity_id" uuid NOT NULL,
 	"entity_type" text NOT NULL,
 	"file_name" text NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE "attachment_files" (
 );
 --> statement-breakpoint
 CREATE TABLE "audit_logs" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text,
 	"action" "audit_action" NOT NULL,
 	"status" "audit_status" NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE "audit_logs" (
 );
 --> statement-breakpoint
 CREATE TABLE "blog_posts" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"slug" text NOT NULL,
 	"content" text NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE "blog_posts" (
 	"tags" text[],
 	"reading_time" integer,
 	"author_id" text NOT NULL,
-	"category_id" integer,
+	"category_id" text,
 	"is_published" boolean DEFAULT false,
 	"published_at" timestamp,
 	"created_at" timestamp DEFAULT now(),
@@ -46,7 +46,7 @@ CREATE TABLE "blog_posts" (
 );
 --> statement-breakpoint
 CREATE TABLE "categories" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"slug" text NOT NULL,
 	"type" text NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE "categories" (
 );
 --> statement-breakpoint
 CREATE TABLE "content_modules" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"course_id" uuid NOT NULL,
 	"title" text NOT NULL,
 	"order_index" integer NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE "course_workshops" (
 );
 --> statement-breakpoint
 CREATE TABLE "courses" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"slug" text NOT NULL,
 	"description" text NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE "courses" (
 );
 --> statement-breakpoint
 CREATE TABLE "enrollments" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"course_id" uuid NOT NULL,
 	"payment_id" uuid,
@@ -96,7 +96,7 @@ CREATE TABLE "enrollments" (
 );
 --> statement-breakpoint
 CREATE TABLE "lesson_progress" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"lesson_id" uuid NOT NULL,
 	"is_completed" boolean DEFAULT false,
@@ -106,7 +106,7 @@ CREATE TABLE "lesson_progress" (
 );
 --> statement-breakpoint
 CREATE TABLE "lessons" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"module_id" uuid NOT NULL,
 	"title" text NOT NULL,
 	"content_text" text,
@@ -116,7 +116,7 @@ CREATE TABLE "lessons" (
 );
 --> statement-breakpoint
 CREATE TABLE "mfa_settings" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"is_enabled" boolean DEFAULT false,
 	"secret" text NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE "mfa_settings" (
 );
 --> statement-breakpoint
 CREATE TABLE "payments" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"amount" integer NOT NULL,
 	"currency" text NOT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE "payments" (
 );
 --> statement-breakpoint
 CREATE TABLE "refresh_tokens" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"token_hash" text NOT NULL,
 	"device_info" text,
@@ -150,7 +150,7 @@ CREATE TABLE "refresh_tokens" (
 );
 --> statement-breakpoint
 CREATE TABLE "site_content" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"key" text NOT NULL,
 	"language" text NOT NULL,
 	"value" text NOT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE "site_content" (
 );
 --> statement-breakpoint
 CREATE TABLE "social_accounts" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"provider" "social_provider" NOT NULL,
 	"provider_id" text NOT NULL,
@@ -175,12 +175,13 @@ CREATE TABLE "users" (
 	"name" text NOT NULL,
 	"email" text NOT NULL,
 	"password_hash" text NOT NULL,
-	"phone" text,
 	"role" "user_role" DEFAULT 'user',
+	"phone" text,
 	"language_preference" text DEFAULT 'en',
 	"is_verified" boolean DEFAULT false,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now(),
+	"currentHashedRefreshToken" text,
 	"is_mfa_enabled" boolean DEFAULT false,
 	"permissions" jsonb,
 	"deleted_at" timestamp,
@@ -188,7 +189,7 @@ CREATE TABLE "users" (
 );
 --> statement-breakpoint
 CREATE TABLE "workshop_registrations" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"workshop_id" uuid NOT NULL,
 	"payment_id" uuid,
@@ -196,7 +197,7 @@ CREATE TABLE "workshop_registrations" (
 );
 --> statement-breakpoint
 CREATE TABLE "workshops" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"slug" text NOT NULL,
 	"description" text NOT NULL,
