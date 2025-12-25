@@ -28,7 +28,7 @@ $cmd = "cd /root && sed -i 's/\r$//' cleanup_vps.sh && sed -i 's/\r$//' install.
 ssh -i $KEY_PATH -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_IP} $cmd
 # Post-deployment migration check
 Write-Host "Running strict migrations..." -ForegroundColor Yellow
-$migrate_cmd = "docker exec mqudah-docker-frontend-1 pnpm db:migrate"
+$migrate_cmd = "docker exec mqudah-app pnpm db:migrate"
 ssh -i $KEY_PATH -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_IP} $migrate_cmd
 
 Remove-Item deployment.tar.gz -ErrorAction SilentlyContinue
