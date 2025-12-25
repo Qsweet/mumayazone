@@ -13,6 +13,7 @@ services:
       - NEXT_PUBLIC_API_URL=https://mumayazone.com/api # Public URL for browser
       - API_URL=http://backend:3001/api # Internal URL for server-side
       - DATABASE_URL=${DATABASE_URL}
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
     depends_on:
       - backend
     networks:

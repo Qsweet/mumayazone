@@ -5,7 +5,7 @@ import { jwtVerify } from 'jose';
 
 const intlMiddleware = createMiddleware(routing);
 // Hardcoded to match server-nest JWT_ACCESS_SECRET for stability
-const SECRET_KEY = new TextEncoder().encode("MqudahJWTSecret2025!");
+const SECRET_KEY = new TextEncoder().encode(process.env.JWT_ACCESS_SECRET || "MqudahAccessSecret2025!");
 
 export default async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
@@ -38,6 +38,7 @@ export default async function middleware(request: NextRequest) {
             // VERIFY TOKEN SIGNATURE & ROLE
             const { payload } = await jwtVerify(token, SECRET_KEY);
             const userRole = payload.role as string;
+            console.log(`[Middleware] Access Granted: ${payload.email} (${userRole}) to ${pathname}`);
 
             // RBAC Enforcement
             if (isAdminRoute && userRole !== 'admin') {
@@ -48,7 +49,10 @@ export default async function middleware(request: NextRequest) {
             }
 
         } catch (error) {
-            console.error("[Middleware] Token Verification Failed:", error);
+            console.error("[Middleware] Token Verification Failed!");
+            console.error(`[Middleware] Token (start): ${token.substring(0, 10)}...`);
+            console.error(`[Middleware] Error Name: ${error.name}`);
+            console.error(`[Middleware] Error Message: ${error.message}`);
             // Token invalid/expired -> Redirect to Login
             return redirectToLogin(request);
         }
