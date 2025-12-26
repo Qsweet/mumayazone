@@ -3,7 +3,7 @@ import { SignJWT, jwtVerify } from "jose";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 
-const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET || "MqudahSecure2025SecretKeyChangeMe");
+const SECRET_KEY = new TextEncoder().encode(process.env.JWT_ACCESS_SECRET || "MqudahAccessSecret2025!");
 const ALG = "HS256";
 
 export async function hashPassword(password: string): Promise<string> {
