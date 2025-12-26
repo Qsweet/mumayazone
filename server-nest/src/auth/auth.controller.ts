@@ -103,7 +103,8 @@ export class AuthController {
         const tokens = await this.authService.getTokens(user.id, user.email, user.role);
         await this.authService.saveRefreshToken(user.id, tokens.refreshTokenId, tokens.refreshToken, "Google Login");
         this.setRefreshTokenCookie(res, tokens.refreshToken);
-        res.redirect('https://mqudah.com/en/admin/dashboard');
+        const frontendUrl = process.env.FRONTEND_URL || 'https://mumayazone.com';
+        res.redirect(`${frontendUrl}/en/admin/dashboard`);
     }
 
     private setRefreshTokenCookie(res: Response, token: string) {

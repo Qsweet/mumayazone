@@ -3,11 +3,35 @@ import { getResumeCourse, getEnrolledCourses } from "./actions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Link } from "@/navigation";
-import { PlayCircle, BookOpen, Clock, Award } from "lucide-react";
+import { Link, redirect } from "@/navigation"; // Use localized redirect
+import { PlayCircle, BookOpen } from "lucide-react";
 import Image from "next/image";
+import { cookies } from "next/headers";
+import { jwtVerify } from "jose";
 
 export default async function DashboardPage() {
+    // 1. Role-Based Routing (Smart Router)
+    const cookieStore = cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (token) {
+        try {
+            const secret = new TextEncoder().encode(process.env.JWT_ACCESS_SECRET || "MqudahAccessSecret2025!");
+            const { payload } = await jwtVerify(token, secret);
+            const role = (payload.role as string)?.toUpperCase(); // Normalize to ADMIN/INSTRUCTOR
+
+            if (role === 'ADMIN') {
+                redirect('/admin/dashboard');
+            }
+            if (role === 'INSTRUCTOR') {
+                redirect('/instructor/dashboard');
+            }
+        } catch (e) {
+            // Token invalid, middleware handles this usually, but safe fallback
+        }
+    }
+
+    // 2. Student Dashboard Logic (Default)
     const resumeData = await getResumeCourse();
     const enrolledCourses = await getEnrolledCourses();
 
@@ -60,9 +84,7 @@ export default async function DashboardPage() {
                                         <span>Progress</span>
                                         <span>{resumeData.progress.isCompleted ? "Completed" : "In Progress"}</span>
                                     </div>
-                                    {/* Use our progress component? Or simple div? Assuming Progress is installed */}
                                     <Progress value={resumeData.progress.isCompleted ? 100 : 50} className="h-1.5" />
-                                    {/* Note: lastWatchedPosition isn't percentage. We'd need total duration. defaulting to 50 for in-progress. */}
                                 </div>
                                 <div className="pt-2">
                                     <Button asChild size="sm" className="gap-2">

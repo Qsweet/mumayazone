@@ -1,0 +1,5 @@
+docker exec mqudah-docker-postgres-1 psql -U postgres -d mqudah_db -c "select id, user_id from lesson_progress where user_id = '00000000-0000-0000-0000-000000000000';"
+echo "--- Testing with explicit cast to text ---"
+docker exec mqudah-docker-postgres-1 psql -U postgres -d mqudah_db -c "select id, user_id from lesson_progress where user_id = '00000000-0000-0000-0000-000000000000'::text;"
+echo "--- Testing with explicit cast to uuid ---"
+docker exec mqudah-docker-postgres-1 psql -U postgres -d mqudah_db -c "select id, user_id from lesson_progress where user_id = '00000000-0000-0000-0000-000000000000'::uuid;"

@@ -3,7 +3,7 @@ import { relations } from 'drizzle-orm';
 
 // Enums
 // Enums
-export const userRoleEnum = pgEnum('user_role', ['user', 'admin', 'instructor']);
+export const userRoleEnum = pgEnum('user_role', ['STUDENT', 'INSTRUCTOR', 'ADMIN']);
 export const courseLevelEnum = pgEnum('course_level', ['beginner', 'intermediate', 'advanced']);
 export const enrollmentStatusEnum = pgEnum('enrollment_status', ['active', 'completed', 'dropped']);
 
@@ -24,7 +24,7 @@ export const users = pgTable('users', {
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
     passwordHash: text('password_hash').notNull(),
-    role: userRoleEnum('role').default('user'),
+    role: userRoleEnum('role').default('STUDENT'),
     phone: text('phone'),
     languagePreference: text('language_preference').default('en'),
     isVerified: boolean('is_verified').default(false),

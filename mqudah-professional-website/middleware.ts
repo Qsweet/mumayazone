@@ -41,8 +41,13 @@ export default async function middleware(request: NextRequest) {
             console.log(`[Middleware] Access Granted: ${payload.email} (${userRole}) to ${pathname}`);
 
             // RBAC Enforcement
-            if (isAdminRoute && userRole !== 'admin') {
+            // Fix: Check role case-insensitively to match DB enum (ADMIN/STUDENT) vs code (admin/user)
+            const normalizedRole = userRole.toLowerCase().trim();
+            console.log(`[Middleware Debug] Role: '${userRole}', Normalized: '${normalizedRole}', IsAdminRoute: ${isAdminRoute}`);
+
+            if (isAdminRoute && normalizedRole !== 'admin') {
                 console.warn(`[Middleware] Unauthorized Admin Access Attempt by ${payload.email} (${userRole})`);
+                console.warn(`[Middleware Debug] Check failed: '${normalizedRole}' !== 'admin'`);
                 // Redirect user to their allowed dashboard or home
                 const locale = getLocale(request);
                 return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));

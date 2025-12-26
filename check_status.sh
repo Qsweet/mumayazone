@@ -1,0 +1,1 @@
+curl -o /dev/null -s -w "%{http_code}\n" -b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzYmIyMGFhOS0wNmI1LTQ2MjEtYjc3My1jY2M3ZGMzMWRhYWUiLCJlbWFpbCI6InRlc3Qud29ya3MuZmluYWxseS45OTIyQG11bWF5YXpvbmUuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3NjY2NjQ4NzZ9.V2oQMTtL_OyMVopBjmAM77zTfrRkorX3rWyqAhP_5mU" http://localhost:3000/en/dashboard
