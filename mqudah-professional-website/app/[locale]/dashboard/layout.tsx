@@ -14,7 +14,7 @@ import { jwtVerify } from "jose";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
     // 1. Get User Role safely
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
     let role = "STUDENT";
 
