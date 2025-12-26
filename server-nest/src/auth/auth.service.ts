@@ -222,8 +222,9 @@ export class AuthService {
     }
 
     async updateRefreshToken(userId: string, refreshToken: string) {
-        const hash = await this.hashData(refreshToken);
-        await this.usersService.setCurrentRefreshToken(hash, userId);
+        // Deprecated: Uses removed column
+        // const hash = await this.hashData(refreshToken);
+        // await this.usersService.setCurrentRefreshToken(hash, userId);
     }
 
     hashData(data: string) {

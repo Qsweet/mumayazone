@@ -38,20 +38,5 @@ export class UsersService {
         });
     }
 
-    async setCurrentRefreshToken(refreshToken: string, userId: string) {
-        // Determine if we should hash here. The plan said "currentHashedRefreshToken".
-        // We will assume the passed token is ALREADY hashed by AuthService for separation of concerns.
-        await this.update(userId, {
-            currentHashedRefreshToken: refreshToken,
-        });
-    }
-
-    async getUserIfRefreshTokenMatches(refreshToken: string, userId: string): Promise<User | null> {
-        const user = await this.findById(userId);
-        if (!user || !user.currentHashedRefreshToken) return null;
-
-        // Comparison should happen in AuthService using bcrypt.compare
-        // This method just returns the user for the AuthService to validate.
-        return user;
-    }
+    // Deprecated methods removed
 }

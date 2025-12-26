@@ -48,7 +48,7 @@ model User {
   password_hash           String
   role                    UserRole                  @default(STUDENT)
   isVerified              Boolean                   @default(false) @map("is_verified")
-  currentHashedRefreshToken String?     // @deprecated in favor of refresh_tokens table
+
 
   isMfaEnabled            Boolean                   @default(false) @map("is_mfa_enabled")
 

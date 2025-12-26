@@ -11,7 +11,7 @@ import { jwtVerify } from "jose";
 
 export default async function DashboardPage() {
     // 1. Role-Based Routing (Smart Router)
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
     if (token) {

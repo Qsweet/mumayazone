@@ -35,7 +35,7 @@ export default async function AdminLayout({
     const user = decodeToken(token.value);
 
     // If invalid token or NOT Admin, kick them out
-    if (!user || user.role !== 'admin') {
+    if (!user || (user.role as string)?.toLowerCase() !== 'admin') {
         redirect("/en/login");
     }
 
