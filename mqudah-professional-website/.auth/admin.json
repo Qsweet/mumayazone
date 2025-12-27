@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "refresh_token",
-      "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTBkODBmYS1mMWUxLTRkZmMtYWUxMi1iMzZhMTI4YjgzNWIiLCJlbWFpbCI6ImFkbWluX2UyZUBtcXVkYWguY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NDA0Mjg2LCJleHAiOjE3NjY0OTA2ODZ9.mBg-lxMQePx59lY7LOpcXbQjfx7vg6rgINEJWWscu1A",
+      "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTBkODBmYS1mMWUxLTRkZmMtYWUxMi1iMzZhMTI4YjgzNWIiLCJlbWFpbCI6ImFkbWluX2UyZUBtcXVkYWguY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NzM4MDAzLCJleHAiOjE3NjY4MjQ0MDN9.fT-7R-FiOmqQHoypRNp7iHlDc0lhLW60KBbKD8Dp2NI",
       "domain": "localhost",
       "path": "/",
-      "expires": 1766490686.195832,
+      "expires": 1766824403.317298,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Strict"
     },
     {
       "name": "token",
-      "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTBkODBmYS1mMWUxLTRkZmMtYWUxMi1iMzZhMTI4YjgzNWIiLCJlbWFpbCI6ImFkbWluX2UyZUBtcXVkYWguY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NDA0Mjg2LCJleHAiOjE3NjY0OTA2ODZ9.mBg-lxMQePx59lY7LOpcXbQjfx7vg6rgINEJWWscu1A",
+      "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTBkODBmYS1mMWUxLTRkZmMtYWUxMi1iMzZhMTI4YjgzNWIiLCJlbWFpbCI6ImFkbWluX2UyZUBtcXVkYWguY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NzM4MDAzLCJleHAiOjE3NjY4MjQ0MDN9.fT-7R-FiOmqQHoypRNp7iHlDc0lhLW60KBbKD8Dp2NI",
       "domain": "localhost",
       "path": "/",
-      "expires": 1766490686.19761,
+      "expires": 1766824403.320933,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Strict"
@@ -27,7 +27,7 @@
       "localStorage": [
         {
           "name": "accessToken",
-          "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTBkODBmYS1mMWUxLTRkZmMtYWUxMi1iMzZhMTI4YjgzNWIiLCJlbWFpbCI6ImFkbWluX2UyZUBtcXVkYWguY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NDA0Mjg2LCJleHAiOjE3NjY0OTA2ODZ9.mBg-lxMQePx59lY7LOpcXbQjfx7vg6rgINEJWWscu1A"
+          "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTBkODBmYS1mMWUxLTRkZmMtYWUxMi1iMzZhMTI4YjgzNWIiLCJlbWFpbCI6ImFkbWluX2UyZUBtcXVkYWguY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NzM4MDAzLCJleHAiOjE3NjY4MjQ0MDN9.fT-7R-FiOmqQHoypRNp7iHlDc0lhLW60KBbKD8Dp2NI"
         }
       ]
     }

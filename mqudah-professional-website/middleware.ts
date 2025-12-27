@@ -38,7 +38,7 @@ export default async function middleware(request: NextRequest) {
             // VERIFY TOKEN SIGNATURE & ROLE
             const { payload } = await jwtVerify(token, SECRET_KEY);
             const userRole = payload.role as string;
-            console.log(`[Middleware] Access Granted: ${payload.email} (${userRole}) to ${pathname}`);
+            // console.log(`[Middleware] Access Granted: ${payload.email} (${userRole}) to ${pathname}`); // Optional log
 
             // RBAC Enforcement
             // Fix: Check role case-insensitively to match DB enum (ADMIN/STUDENT) vs code (admin/user)
@@ -51,9 +51,6 @@ export default async function middleware(request: NextRequest) {
 
         } catch (error) {
             console.error("[Middleware] Token Verification Failed!");
-            console.error(`[Middleware] Token (start): ${token.substring(0, 10)}...`);
-            console.error(`[Middleware] Error Name: ${error.name}`);
-            console.error(`[Middleware] Error Message: ${error.message}`);
             // Token invalid/expired -> Redirect to Login
             return redirectToLogin(request);
         }

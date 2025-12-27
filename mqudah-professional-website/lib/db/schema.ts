@@ -30,7 +30,6 @@ export const users = pgTable('users', {
     isVerified: boolean('is_verified').default(false),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
-    currentHashedRefreshToken: text('currentHashedRefreshToken'),
 
     // Auth v2
     isMfaEnabled: boolean('is_mfa_enabled').default(false),
@@ -241,8 +240,8 @@ export const blogPosts = pgTable('blog_posts', {
     readingTime: integer('reading_time'), // AI-calculated
     authorId: text('author_id').references(() => users.id).notNull(),
     // blogPosts (new) can keep uuid or switch to text. Switching to avoid mix?
-    // references categories.id (now text) implies categoryId must be text.
-    categoryId: text('category_id').references(() => categories.id),
+    // references categories.id (now integer) implies categoryId must be integer.
+    categoryId: integer('category_id').references(() => categories.id),
     isPublished: boolean('is_published').default(false),
     publishedAt: timestamp('published_at'),
     createdAt: timestamp('created_at').defaultNow(),
@@ -269,7 +268,7 @@ export const siteContent = pgTable('site_content', {
 
 // Categories (Kept)
 export const categories = pgTable('categories', {
-    id: text('id').primaryKey(),
+    id: integer('id').primaryKey(),
     name: text('name').notNull(),
     slug: text('slug').notNull().unique(),
     type: text('type').notNull(),

@@ -34,9 +34,16 @@ export default async function AdminLayout({
     const { decodeToken } = await import("@/lib/auth");
     const user = decodeToken(token.value);
 
-    // If invalid token or NOT Admin, kick them out
-    if (!user || (user.role as string)?.toLowerCase() !== 'admin') {
+    // 3. Strict RBAC Check
+    // If invalid token, kick to login
+    if (!user) {
         redirect("/en/login");
+    }
+
+    // If valid token but NOT Admin, redirect to dashboard (Break the loop!)
+    // Normalize role for comparison
+    if ((user.role as string)?.toLowerCase() !== 'admin') {
+        redirect("/en/dashboard");
     }
 
     const navigation = [
